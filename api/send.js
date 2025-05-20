@@ -13,19 +13,23 @@ router.post("/send", async (req, res) => {
     },
   });
 
-  try {
-    await transporter.sendMail({
-      from: process.env.GOOGLE_ID,
-      to: process.env.GOOGLE_ID,
+  transporter.sendMail(
+    {
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_RECEIVER,
       subject,
       text: message,
-    });
-
-    res.json({ message: "이메일이 성공적으로 전송되었습니다." });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "이메일 전송 실패" });
-  }
+    },
+    (err, info) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "이메일 전송 실패" });
+      } else {
+        console.log("Email sent: " + info.response);
+        return res.status(200).json({ message: "이메일이 성공적으로 전송되었습니다." });
+      }
+    }
+  );
 });
 
 module.exports = router;
