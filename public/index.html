@@ -20,7 +20,7 @@
         const subject = document.getElementById("subject").value;
         const message = document.getElementById("message").value;
 
-        fetch("/api/send-email", {
+        fetch("/api/send", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ subject, message }),
