@@ -15,8 +15,8 @@ router.post("/send", async (req, res) => {
 
   transporter.sendMail(
     {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_RECEIVER,
+      from: process.env.GOOGLE_ID,
+      to: process.env.GOOGLE_ID,
       subject,
       text: message,
     },
