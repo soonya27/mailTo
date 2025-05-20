@@ -1,8 +1,10 @@
-const express = require("express");
 const nodemailer = require("nodemailer");
-const router = express.Router();
 
-router.post("/send", async (req, res) => {
+module.exports = async (req, res) => {
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method Not Allowed" });
+  }
+
   const { subject, message } = req.body;
 
   const transporter = nodemailer.createTransport({
@@ -23,13 +25,11 @@ router.post("/send", async (req, res) => {
     (err, info) => {
       if (err) {
         console.error(err);
-        return res.status(500).json({ message: "이메일 전송 실패" });
+        return res.status(500).json({ message: "이메일 전송 실패", error: err.toString() });
       } else {
         console.log("Email sent: " + info.response);
         return res.status(200).json({ message: "이메일이 성공적으로 전송되었습니다." });
       }
     }
   );
-});
-
-module.exports = router;
+};
