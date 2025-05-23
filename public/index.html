@@ -4,14 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>이메일 보내기</title>
+    <link rel="stylesheet" href="/css/common.css" />
   </head>
   <body>
-    <h2>이메일 보내기</h2>
-    <form id="emailForm">
-      <input type="text" id="subject" placeholder="제목" required />
-      <textarea id="message" placeholder="내용" required></textarea>
-      <button type="submit">메일 보내기!</button>
-    </form>
+    <section class="container">
+      <div class="wrapper">
+        <h2>Contact Us</h2>
+        <form id="emailForm">
+          <input type="text" id="subject" placeholder="Title" required />
+          <input type="text" id="email" placeholder="E-Mail or Number" required />
+          <textarea id="message" placeholder="Message" required></textarea>
+          <button class="button" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
 
     <script>
       document.getElementById("emailForm").addEventListener("submit", function (event) {
@@ -19,11 +25,12 @@
 
         const subject = document.getElementById("subject").value;
         const message = document.getElementById("message").value;
+        const email = document.getElementById("email").value;
 
         fetch("/api/send", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ subject, message }),
+          body: JSON.stringify({ subject, message, email }),
         })
           .then((response) => response.json())
           .then((data) => alert(data.message))

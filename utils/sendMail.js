@@ -1,7 +1,7 @@
-// utils/sendMail.js
 const nodemailer = require("nodemailer");
 
-async function sendMail({ subject, message }) {
+// 공통 로직
+async function sendMail({ subject, message, email }) {
   return new Promise((resolve, reject) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -16,7 +16,7 @@ async function sendMail({ subject, message }) {
         from: process.env.GOOGLE_ID,
         to: process.env.GOOGLE_ID,
         subject,
-        text: message,
+        text: `${email}님이 보낸 메일입니다.\n\n${message}`,
       },
       (err, info) => {
         if (err) reject(err);
